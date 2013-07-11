@@ -16,8 +16,8 @@
 #include "kltFbTracker.h"
 #include "mbtEdgeTracker.h"
 #include "condensPose.h"
-#include "mbtEdgeKltTracker.h"
-#include "mbtKltTracker.h"
+//#include "mbtEdgeKltTracker.h"
+//#include "mbtKltTracker.h"
 
 using namespace cv;
 
@@ -132,9 +132,10 @@ int main(int, char**)
 
 	// declare trackers
 	kltFbTracker fbTracker;	
+	
 	mbtEdgeTracker meTracker;	
-	mbtEdgeKltTracker meKltTracker;	
-	mbtKltTracker kltTracker;
+	//mbtEdgeKltTracker meKltTracker;	
+	//mbtKltTracker kltTracker;
 
 	// declare condens
 	// condensPose particle(numberOfParticles);
@@ -196,17 +197,17 @@ int main(int, char**)
 			//for (int i = 0; i < numberOfParticles; i++)
 			//{
 			//	vpHomogeneousMatrix& cMo_ = vecOfPose[i];
-				fbTracker.getPose(cMo_);
+				fbTracker.getPose(cMo);
 				fbTracker.retrieveImage(curImg);
 				fbTracker.track();
-				fbTracker.pubPose(cMo_);
+				fbTracker.pubPose(cMo);
 				if(fbTracker.pubRst(processedImg, TrackerWindow))
 					status = ::LOST;
 
-				meTracker.getPose(cMo_);
+				meTracker.getPose(cMo);
 				meTracker.retrieveImage(curImg);
 				meTracker.track();
-				meTracker.pubPose(cMo_);
+				meTracker.pubPose(cMo);
 				//kltTracker.retrieveImage(curImg);
 				//kltTracker.track();
 				//kltTracker.pubRst();

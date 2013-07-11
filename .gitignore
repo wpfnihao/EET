@@ -25,3 +25,6 @@ types_c.taghl
 
 #Ogre
 Ogre.log
+
+#bin
+./bin/*
