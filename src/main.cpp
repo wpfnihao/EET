@@ -137,7 +137,7 @@ int main(int, char**)
 	mbtKltTracker kltTracker;
 
 	// declare condens
-	condensPose particle(numberOfParticles);
+	// condensPose particle(numberOfParticles);
 
 	// for display
 	namedWindow("video",CV_WINDOW_AUTOSIZE);
@@ -167,18 +167,18 @@ int main(int, char**)
 				getInitPoints();
 				// get the info of the cube from the init points
 				//hlTracker.initModel(initP);
-				//fbTracker.initModel(initP);
-				//fbTracker.init(curImg);
+				fbTracker.initModel(initP);
+				fbTracker.init(curImg);
 
-				kltTracker.retrieveImage(curImg);
-				kltTracker.initialize(config_file, model_name, init_file);
-				//meTracker.retrieveImage(curImg);
-				//meTracker.initialize(config_file, model_name, init_file);
+				//kltTracker.retrieveImage(curImg);
+				//kltTracker.initialize(config_file, model_name, init_file);
+				meTracker.retrieveImage(curImg);
+				meTracker.initialize(config_file, model_name, init_file);
 			}
 
 			initializeTracker(curImg);
-			//fbTracker.retrieveImage(curImg);
-			//fbTracker.initialize(cam, cMo, poseVector, rows, cols);
+			fbTracker.retrieveImage(curImg);
+			fbTracker.initialize(cam, cMo, poseVector, rows, cols);
 
 
 			// initialize condens
@@ -196,20 +196,20 @@ int main(int, char**)
 			//for (int i = 0; i < numberOfParticles; i++)
 			//{
 			//	vpHomogeneousMatrix& cMo_ = vecOfPose[i];
-			//	fbTracker.getPose(cMo_);
-			//	fbTracker.retrieveImage(curImg);
-			//	fbTracker.track();
-			//	fbTracker.pubPose(cMo_);
-			//	if(fbTracker.pubRst(processedImg, TrackerWindow))
-			//		status = ::LOST;
+				fbTracker.getPose(cMo_);
+				fbTracker.retrieveImage(curImg);
+				fbTracker.track();
+				fbTracker.pubPose(cMo_);
+				if(fbTracker.pubRst(processedImg, TrackerWindow))
+					status = ::LOST;
 
-				//meTracker.getPose(cMo_);
-				//meTracker.retrieveImage(curImg);
-				//meTracker.track();
-				//meTracker.pubPose(cMo_);
-				kltTracker.retrieveImage(curImg);
-				kltTracker.track();
-				kltTracker.pubRst();
+				meTracker.getPose(cMo_);
+				meTracker.retrieveImage(curImg);
+				meTracker.track();
+				meTracker.pubPose(cMo_);
+				//kltTracker.retrieveImage(curImg);
+				//kltTracker.track();
+				//kltTracker.pubRst();
 			//}
 			//particle.setPredict(vecOfPose);
 			//particle.findConfidence(curImg, fbTracker.getPolygon(), vecOfPose, cam);
