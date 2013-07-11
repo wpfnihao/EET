@@ -11,3 +11,17 @@
 *.lai
 *.la
 *.a
+
+#cmake
+CMakeCache.txt
+CMakeFiles/*
+Makefile
+cmake_install.cmake
+config.0.pos
+
+#tags
+tags
+types_c.taghl
+
+#Ogre
+Ogre.log
