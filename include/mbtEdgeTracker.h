@@ -14,8 +14,9 @@
 #include <visp/vpPoseFeatures.h>
 
 // for initialization
-#include "visp/vpDisplay.h"
-#include "visp/vpDisplayX.h"
+//#include "visp/vpDisplay.h"
+//#include "visp/vpDisplayX.h"
+#include <visp/vpDisplayOpenCV.h>
 
 // for opencv image convert
 #include <visp/vpImageConvert.h>
@@ -103,7 +104,7 @@ class mbtEdgeTracker
 		/**
 		 * @brief for display the result
 		 */
-		vpDisplayX display;
+		vpDisplayOpenCV display;
 
 		std::string cad_name;
 };

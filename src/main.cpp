@@ -12,6 +12,15 @@
 #include <visp/vpCameraParameters.h>
 #include <visp/vpPoseFeatures.h>
 
+
+//display
+#include <visp/vpDisplayD3D.h>
+#include <visp/vpDisplayGDI.h>
+#include <visp/vpDisplayGTk.h>
+#include <visp/vpDisplayX.h>
+#include <visp/vpDisplayOpenCV.h>
+
+
 // user headers
 #include "kltFbTracker.h"
 #include "mbtEdgeTracker.h"
@@ -30,8 +39,8 @@ enum tracking_status
 
 // global statuses maintained
 ::tracking_status status = ::INITIAL;	
-int rows = 720;
-int cols = 1280;
+int rows = 480;
+int cols = 640;
 std::string init_file = "config.init";
 std::string model_name = "config.cao";
 std::string config_file = "config.xml";
@@ -107,8 +116,19 @@ initializeTracker(const cv::Mat& srcImg)
 
 	//initial the display
 	//these steps are not shown in the manual document
-	vpDisplayX display;
-	display.init(vpImg);
+#if defined(VISP_HAVE_X11)
+	vpDisplayX display(vpImg);
+#elif defined(VISP_HAVE_GDI)
+	vpDisplayGDI display(vpImg);
+#elif defined(VISP_HAVE_OPENCV)
+	vpDisplayOpenCV display(vpImg);
+#elif defined(VISP_HAVE_GTK)
+	vpDisplayGTK display(vpImg);
+#elif defined(VISP_HAVE_D3D9)
+	vpDisplayD3d display(vpImg);
+#else
+	std::cout << "No image viewer is available..." << std::endl;
+#endif
 
 	initializer.initClick(vpImg, init_file);
 	// obtain the initial pose of the model
@@ -116,7 +136,7 @@ initializeTracker(const cv::Mat& srcImg)
 	poseVector.buildFrom(cMo);
 
 	//clean up
-	vpXmlParser::cleanup();
+	//vpXmlParser::cleanup();
 }
 
 // the program entry point
@@ -124,7 +144,7 @@ int main(int, char**)
 {
 
 	// capture frames
-	VideoCapture cap(0); // open the default camera
+	VideoCapture cap(1); // open the default camera
 	cap.set(CV_CAP_PROP_FRAME_WIDTH, cols);
 	cap.set(CV_CAP_PROP_FRAME_HEIGHT, rows);
 	if(!cap.isOpened()) // check if we succeeded
@@ -141,7 +161,7 @@ int main(int, char**)
 	// condensPose particle(numberOfParticles);
 
 	// for display
-	namedWindow("video",CV_WINDOW_AUTOSIZE);
+	//namedWindow("video",CV_WINDOW_AUTOSIZE);
 
 	for(;;)
 	{
@@ -219,8 +239,8 @@ int main(int, char**)
 		}
 
 		// display the result
-		imshow("video", processedImg);
-		if(waitKey(1) >= 0) break;
+		//imshow("video", processedImg);
+		//if(waitKey(1) >= 0) break;
 	}
 
 	// the camera will be deinitialized automatically in VideoCapture destructor

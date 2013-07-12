@@ -28,3 +28,9 @@ Ogre.log
 
 #bin
 ./bin/*
+*.exe
+
+#lib
+./lib/*
+*.lib
+*.dll

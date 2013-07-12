@@ -8,8 +8,9 @@
 
 #include "kltFbTracker.h"
 
-#include "visp/vpDisplay.h"
-#include "visp/vpDisplayX.h"
+//#include "visp/vpDisplay.h"
+//#include "visp/vpDisplayX.h"
+//#include <visp/vpDisplayOpenCV.h>
 
 // for conversion
 #include "visp/vpMeterPixelConversion.h"
