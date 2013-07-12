@@ -3,7 +3,7 @@
 
 // standard headers
 #include <iostream>
-#include <vector>
+#include <vector> 
 #include <fstream>
 
 // visp headers
@@ -16,7 +16,7 @@
 //display
 #include <visp/vpDisplayD3D.h>
 #include <visp/vpDisplayGDI.h>
-#include <visp/vpDisplayGTk.h>
+//#include <visp/vpDisplayGTk.h>
 #include <visp/vpDisplayX.h>
 #include <visp/vpDisplayOpenCV.h>
 
@@ -39,6 +39,8 @@ enum tracking_status
 
 // global statuses maintained
 ::tracking_status status = ::INITIAL;	
+//int rows = 720;
+//int cols = 1280;
 int rows = 480;
 int cols = 640;
 std::string init_file = "config.init";
@@ -144,7 +146,7 @@ int main(int, char**)
 {
 
 	// capture frames
-	VideoCapture cap(1); // open the default camera
+	VideoCapture cap(0); // open the default camera
 	cap.set(CV_CAP_PROP_FRAME_WIDTH, cols);
 	cap.set(CV_CAP_PROP_FRAME_HEIGHT, rows);
 	if(!cap.isOpened()) // check if we succeeded
@@ -161,7 +163,7 @@ int main(int, char**)
 	// condensPose particle(numberOfParticles);
 
 	// for display
-	//namedWindow("video",CV_WINDOW_AUTOSIZE);
+	namedWindow("video",CV_WINDOW_AUTOSIZE);
 
 	for(;;)
 	{
@@ -222,7 +224,10 @@ int main(int, char**)
 				fbTracker.track();
 				fbTracker.pubPose(cMo);
 				if(fbTracker.pubRst(processedImg, TrackerWindow))
+				{
 					status = ::LOST;
+					continue;
+				}
 
 				meTracker.getPose(cMo);
 				meTracker.retrieveImage(curImg);
@@ -239,8 +244,8 @@ int main(int, char**)
 		}
 
 		// display the result
-		//imshow("video", processedImg);
-		//if(waitKey(1) >= 0) break;
+		imshow("video", processedImg);
+		if(waitKey(1) >= 0) break;
 	}
 
 	// the camera will be deinitialized automatically in VideoCapture destructor

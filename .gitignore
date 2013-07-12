@@ -34,3 +34,6 @@ Ogre.log
 ./lib/*
 *.lib
 *.dll
+
+#visual studio
+*.pdb

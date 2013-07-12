@@ -12,7 +12,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-#define  VISP2_7
+//#define  VISP2_7
 
 mbtEdgeTracker::mbtEdgeTracker()
 :tracker()  // init the vpMbEdgeTracker

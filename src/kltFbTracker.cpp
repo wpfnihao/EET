@@ -340,8 +340,8 @@ kltFbTracker::genFeaturesForTrackOnFace(std::vector<vpPoint>& features, int face
 	float step = 1.0 / numOfPtsPerFace;
 
 	// avoid the edge
-	for (int i = 0; i <= numOfPtsPerFace; i++)
-		for (int j = 0; j <= numOfPtsPerFace; j++)
+	for (int i = 1; i < numOfPtsPerFace; i++)
+		for (int j = 1; j < numOfPtsPerFace; j++)
 		{
 			vpPoint fp;
 			float alpha = i * step;
