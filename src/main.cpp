@@ -12,6 +12,11 @@
 #include <visp/vpCameraParameters.h>
 #include <visp/vpPoseFeatures.h>
 
+// tracker head
+#include <visp/vpMbEdgeTracker.h>
+#include <visp/vpMbKltTracker.h>
+#include <visp/vpMbEdgeKltTracker.h>
+
 
 //display
 #include <visp/vpDisplayD3D.h>
@@ -146,9 +151,10 @@ int main(int, char**)
 {
 
 	// capture frames
-	VideoCapture cap(0); // open the default camera
-	cap.set(CV_CAP_PROP_FRAME_WIDTH, cols);
-	cap.set(CV_CAP_PROP_FRAME_HEIGHT, rows);
+	//VideoCapture cap(); // open the default camera
+	VideoCapture cap("/home/sai/Desktop/cracker.avi"); // open the default video file
+	//cap.set(CV_CAP_PROP_FRAME_WIDTH, cols);
+	//cap.set(CV_CAP_PROP_FRAME_HEIGHT, rows);
 	if(!cap.isOpened()) // check if we succeeded
 		return -1;
 
@@ -172,6 +178,8 @@ int main(int, char**)
 		cap >> curImg; // get a new frame from camera
 		processedImg = curImg;
 
+		// convert the image to vpImage
+
 
 		//tracking based on different status
 		if (status == ::LOST || status == ::INITIAL)
@@ -190,8 +198,8 @@ int main(int, char**)
 				getInitPoints();
 				// get the info of the cube from the init points
 				//hlTracker.initModel(initP);
-				fbTracker.initModel(initP);
-				fbTracker.init(curImg);
+				//fbTracker.initModel(initP);
+				//fbTracker.init(curImg);
 
 				//kltTracker.retrieveImage(curImg);
 				//kltTracker.initialize(config_file, model_name, init_file);
@@ -200,8 +208,8 @@ int main(int, char**)
 			}
 
 			initializeTracker(curImg);
-			fbTracker.retrieveImage(curImg);
-			fbTracker.initialize(cam, cMo, poseVector, rows, cols);
+			//fbTracker.retrieveImage(curImg);
+			//fbTracker.initialize(cam, cMo, poseVector, rows, cols);
 
 
 			// initialize condens
@@ -219,15 +227,15 @@ int main(int, char**)
 			//for (int i = 0; i < numberOfParticles; i++)
 			//{
 			//	vpHomogeneousMatrix& cMo_ = vecOfPose[i];
-				fbTracker.getPose(cMo);
-				fbTracker.retrieveImage(curImg);
-				fbTracker.track();
-				fbTracker.pubPose(cMo);
-				if(fbTracker.pubRst(processedImg, TrackerWindow))
-				{
-					status = ::LOST;
-					continue;
-				}
+				//fbTracker.getPose(cMo);
+				//fbTracker.retrieveImage(curImg);
+				//fbTracker.track();
+				//fbTracker.pubPose(cMo);
+				//if(fbTracker.pubRst(processedImg, TrackerWindow))
+				//{
+				//	status = ::LOST;
+				//	continue;
+				//}
 
 				meTracker.getPose(cMo);
 				meTracker.retrieveImage(curImg);
